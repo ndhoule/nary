@@ -4,7 +4,7 @@
  * Object.prototype.toString reference.
  */
 
-var toString = Object.prototype.toString;
+var objToString = Object.prototype.toString;
 
 /**
  * Determine if a value is a function.
@@ -28,7 +28,7 @@ var isFunction = function(val) {
 // TODO: Move to lib
 var isNumber = function(val) {
   var type = typeof val;
-  return type === 'number' || (type === 'object' && toString.call(val) === '[object Number]');
+  return type === 'number' || (type === 'object' && objToString.call(val) === '[object Number]');
 };
 
  /**
@@ -66,14 +66,14 @@ var createParams = function createParams(n) {
 var createNaryWrapper = function createNaryWrapper(n) {
   var paramNames = createParams(n).join(', ');
   var wrapperBody = ''.concat(
-    '  return function(', paramNames , ') {\n',
+    '  return function(', paramNames, ') {\n',
     '    return func.apply(this, Array.prototype.slice.call(arguments, 0, ' + n + '));\n',
     '  };'
   );
 
-  /* jshint -W054 */
+  /* eslint-disable no-new-func */
   return new Function('func', wrapperBody);
-  /* jshint +W054 */
+  /* eslint-enable no-new-func */
 };
 
  /**
@@ -81,7 +81,7 @@ var createNaryWrapper = function createNaryWrapper(n) {
   */
 
 var naryWrapperCache = [
-  /* jshint -W098 */
+  /* eslint-disable no-unused-vars */
   function(fn) {
     return function() {
       return fn.apply(this);
@@ -117,7 +117,7 @@ var naryWrapperCache = [
       return fn.apply(this, Array.prototype.slice.call(arguments, 0, 5));
     };
   }
-  /* jshint +W098 */
+  /* eslint-enable no-unused-vars */
 ];
 
 /**
@@ -150,7 +150,7 @@ var naryWrapperCache = [
 
 var nary = function nary(n, func) {
   if (!isFunction(func)) {
-    throw TypeError('Expected a function but got ' + typeof func);
+    throw new TypeError('Expected a function but got ' + typeof func);
   }
 
   n = Math.max(isNumber(n) ? n : 0, 0);
