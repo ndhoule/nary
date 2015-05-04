@@ -2,11 +2,12 @@
 sudo: false
 addons:
   sauce_connect: true
-
 language: node_js
 script: make test
 node_js:
 - '0.10'
+before_install:
+  npm install -g npm@'>=2.7.0'
 matrix:
   include:
   - env: BROWSER_NAME=chrome BROWSER_VERSION=41
