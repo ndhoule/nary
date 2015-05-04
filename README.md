@@ -5,7 +5,8 @@ Wrap a function so that it only accepts a predefined number of arguments.
 ## Installation
 
 ```sh
-component install ndhoule/nary
+$ component install ndhoule/nary
+$ npm install @ndhoule/nary
 ```
 
 ## API
