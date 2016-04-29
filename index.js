@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * Object.prototype.toString reference.
- */
-
 var objToString = Object.prototype.toString;
 
 /**
@@ -12,7 +8,6 @@ var objToString = Object.prototype.toString;
  * @param {*} val
  * @return {boolean}
  */
-
 // TODO: Move to lib
 var isFunction = function(val) {
   return typeof val === 'function';
@@ -24,7 +19,6 @@ var isFunction = function(val) {
  * @param {*} val
  * @return {boolean}
  */
-
 // TODO: Move to lib
 var isNumber = function(val) {
   var type = typeof val;
@@ -42,7 +36,6 @@ var isNumber = function(val) {
   * argNames(2);
   * //=> ['arg1', 'arg2']
   */
-
 var createParams = function createParams(n) {
   var args = [];
 
@@ -62,7 +55,6 @@ var createParams = function createParams(n) {
   * @param {number} n
   * @return {Function(Function)}
   */
-
 var createNaryWrapper = function createNaryWrapper(n) {
   var paramNames = createParams(n).join(', ');
   var wrapperBody = ''.concat(
@@ -79,7 +71,6 @@ var createNaryWrapper = function createNaryWrapper(n) {
  /**
   * Cache common nary wrappers to avoid constructing them at runtime.
   */
-
 var naryWrapperCache = [
   /* eslint-disable no-unused-vars */
   function(fn) {
@@ -147,22 +138,21 @@ var naryWrapperCache = [
  * unaryAdd(1, 2, 3, 4, 5);
  * // => 3
  */
-
 var nary = function nary(n, func) {
   if (!isFunction(func)) {
     throw new TypeError('Expected a function but got ' + typeof func);
   }
 
-  n = Math.max(isNumber(n) ? n : 0, 0);
+  var _n = Math.max(isNumber(n) ? n : 0, 0);
 
-  if (!naryWrapperCache[n]) {
-    naryWrapperCache[n] = createNaryWrapper(n);
+  if (!naryWrapperCache[_n]) {
+    naryWrapperCache[_n] = createNaryWrapper(_n);
   }
 
-  return naryWrapperCache[n](func);
+  return naryWrapperCache[_n](func);
 };
 
-/**
+/*
  * Exports.
  */
 
