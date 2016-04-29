@@ -1,6 +1,6 @@
 {
   "name": "@ndhoule/nary",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Wrap a function so that it only accepts a predefined number of arguments.",
   "main": "index.js",
   "repository": {
